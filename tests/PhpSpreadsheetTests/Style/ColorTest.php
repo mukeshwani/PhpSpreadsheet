@@ -12,7 +12,7 @@ class ColorTest extends TestCase
      *
      * @param mixed $expectedResult
      */
-    public function testGetRed($expectedResult, ...$args)
+    public function testGetRed($expectedResult, ...$args): void
     {
         $result = Color::getRed(...$args);
         self::assertEquals($expectedResult, $result);
@@ -20,7 +20,7 @@ class ColorTest extends TestCase
 
     public function providerColorGetRed()
     {
-        return require 'data/Style/ColorGetRed.php';
+        return require 'tests/data/Style/ColorGetRed.php';
     }
 
     /**
@@ -28,7 +28,7 @@ class ColorTest extends TestCase
      *
      * @param mixed $expectedResult
      */
-    public function testGetGreen($expectedResult, ...$args)
+    public function testGetGreen($expectedResult, ...$args): void
     {
         $result = Color::getGreen(...$args);
         self::assertEquals($expectedResult, $result);
@@ -36,7 +36,7 @@ class ColorTest extends TestCase
 
     public function providerColorGetGreen()
     {
-        return require 'data/Style/ColorGetGreen.php';
+        return require 'tests/data/Style/ColorGetGreen.php';
     }
 
     /**
@@ -44,7 +44,7 @@ class ColorTest extends TestCase
      *
      * @param mixed $expectedResult
      */
-    public function testGetBlue($expectedResult, ...$args)
+    public function testGetBlue($expectedResult, ...$args): void
     {
         $result = Color::getBlue(...$args);
         self::assertEquals($expectedResult, $result);
@@ -52,7 +52,7 @@ class ColorTest extends TestCase
 
     public function providerColorGetBlue()
     {
-        return require 'data/Style/ColorGetBlue.php';
+        return require 'tests/data/Style/ColorGetBlue.php';
     }
 
     /**
@@ -60,7 +60,7 @@ class ColorTest extends TestCase
      *
      * @param mixed $expectedResult
      */
-    public function testChangeBrightness($expectedResult, ...$args)
+    public function testChangeBrightness($expectedResult, ...$args): void
     {
         $result = Color::changeBrightness(...$args);
         self::assertEquals($expectedResult, $result);
@@ -68,6 +68,23 @@ class ColorTest extends TestCase
 
     public function providerColorChangeBrightness()
     {
-        return require 'data/Style/ColorChangeBrightness.php';
+        return require 'tests/data/Style/ColorChangeBrightness.php';
+    }
+
+    public function testDefaultColor(): void
+    {
+        $color = new Color();
+        $color->setARGB('FFFF0000');
+        self::assertEquals('FFFF0000', $color->getARGB());
+        self::assertEquals('FF0000', $color->getRGB());
+        $color->setARGB('');
+        self::assertEquals(Color::COLOR_BLACK, $color->getARGB());
+        self::assertEquals('000000', $color->getRGB());
+        $color->setARGB('FFFF0000');
+        self::assertEquals('FFFF0000', $color->getARGB());
+        self::assertEquals('FF0000', $color->getRGB());
+        $color->setRGB('');
+        self::assertEquals(Color::COLOR_BLACK, $color->getARGB());
+        self::assertEquals('000000', $color->getRGB());
     }
 }

@@ -189,7 +189,7 @@ class Style extends Supervisor
      * @param array $pStyles Array containing style information
      * @param bool $pAdvanced advanced mode for setting borders
      *
-     * @return Style
+     * @return $this
      */
     public function applyFromArray(array $pStyles, $pAdvanced = true)
     {
@@ -204,7 +204,7 @@ class Style extends Supervisor
                 $rangeA = $pRange;
                 $rangeB = $pRange;
             } else {
-                list($rangeA, $rangeB) = explode(':', $pRange);
+                [$rangeA, $rangeB] = explode(':', $pRange);
             }
 
             // Calculate range outer borders
@@ -483,9 +483,7 @@ class Style extends Supervisor
     /**
      * Set font.
      *
-     * @param Font $font
-     *
-     * @return Style
+     * @return $this
      */
     public function setFont(Font $font)
     {
@@ -539,7 +537,7 @@ class Style extends Supervisor
      *
      * @param Conditional[] $pValue Array of conditional styles
      *
-     * @return Style
+     * @return $this
      */
     public function setConditionalStyles(array $pValue)
     {
@@ -577,7 +575,7 @@ class Style extends Supervisor
      *
      * @param bool $pValue
      *
-     * @return Style
+     * @return $this
      */
     public function setQuotePrefix($pValue)
     {
@@ -634,8 +632,22 @@ class Style extends Supervisor
      *
      * @param int $pValue
      */
-    public function setIndex($pValue)
+    public function setIndex($pValue): void
     {
         $this->index = $pValue;
+    }
+
+    protected function exportArray1(): array
+    {
+        $exportedArray = [];
+        $this->exportArray2($exportedArray, 'alignment', $this->getAlignment());
+        $this->exportArray2($exportedArray, 'borders', $this->getBorders());
+        $this->exportArray2($exportedArray, 'fill', $this->getFill());
+        $this->exportArray2($exportedArray, 'font', $this->getFont());
+        $this->exportArray2($exportedArray, 'numberFormat', $this->getNumberFormat());
+        $this->exportArray2($exportedArray, 'protection', $this->getProtection());
+        $this->exportArray2($exportedArray, 'quotePrefx', $this->getQuotePrefix());
+
+        return $exportedArray;
     }
 }
